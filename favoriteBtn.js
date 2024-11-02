@@ -8,14 +8,18 @@ var alertFunc = function () {
 var btnStyle = {
     height: '50px',
     width: '100px',
-    backgroundColor: 'gray',
+    backgroundColor: 'red',
 };
-var setBtnStyle = function (bthElm, style) {
+var setBtnStyle = function (btnElm, style) {
     Object.keys(style).forEach(function (key) {
-        bthElm.style.setProperty(key, style[key]);
+        btnElm.style.setProperty(key, style[key]);
     });
 };
+var setBtnInnerText = function (btnElm, txt) {
+    btnElm.innerText = txt;
+};
 var alertBtn = createBtn();
+setBtnInnerText(alertBtn, 'アラート表示');
 setBtnStyle(alertBtn, btnStyle);
 alertBtn.addEventListener('click', alertFunc);
 document.body.appendChild(alertBtn);
