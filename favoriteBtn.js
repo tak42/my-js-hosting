@@ -12,8 +12,9 @@ var btnStyle = {
     'background-color': 'red',
 };
 var setBtnStyle = function (btnElm, style) {
-    Object.keys(style).forEach(function (key) {
-        btnElm.style.setProperty(key, style[key]);
+    Object.entries(style).forEach(function (_a) {
+        var key = _a[0], val = _a[1];
+        btnElm.style.setProperty(key, val);
     });
 };
 var setBtnInnerText = function (btnElm, txt) {
