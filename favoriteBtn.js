@@ -8,7 +8,8 @@ var alertFunc = function () {
 var btnStyle = {
     height: '50px',
     width: '100px',
-    'background-Color': 'red',
+    color: 'white',
+    'background-color': 'red',
 };
 var setBtnStyle = function (btnElm, style) {
     Object.keys(style).forEach(function (key) {
