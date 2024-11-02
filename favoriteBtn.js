@@ -21,7 +21,7 @@ var setBtnInnerText = function (btnElm, txt) {
     btnElm.innerText = txt;
 };
 var alertBtn = createBtn();
-setBtnInnerText(alertBtn, 'アラート表示');
+setBtnInnerText(alertBtn, 'アラート表示2');
 setBtnStyle(alertBtn, btnStyle);
 alertBtn.addEventListener('click', alertFunc);
 document.body.appendChild(alertBtn);
