@@ -5,8 +5,6 @@ var btnStyle = [
     { property: 'color', value: 'red' },
 ];
 var iframeStyle = [
-    { property: 'height', value: '800px' },
-    { property: 'width', value: '600px' },
     { property: 'position', value: 'absolute' },
     { property: 'top', value: '50%' },
     { property: 'left', value: '50%' },
