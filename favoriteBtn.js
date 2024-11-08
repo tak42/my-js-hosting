@@ -4,7 +4,12 @@ var btnStyle = [
     { property: 'height', value: '50px' },
     { property: 'color', value: 'red' },
 ];
-var iframeStyle = [{ property: 'border', value: 'none' }];
+var iframeStyle = [
+    { property: 'position', value: 'absolute' },
+    { property: 'top', value: '50%' },
+    { property: 'left', value: '50%' },
+    { property: 'transform', value: 'translate(-50%, -50%)' },
+];
 var divStyle = [
     { property: 'height', value: '100vh' },
     { property: 'display', value: 'flex' },
@@ -27,6 +32,6 @@ iframe.src = 'https://www.mouse-jp.co.jp/';
 setStyle(btn, btnStyle);
 setStyle(div, divStyle);
 setStyle(iframe, iframeStyle);
-btn.addEventListener('click', function () { return setDisplayIframe(div); });
+btn.addEventListener('click', function () { return setDisplayIframe(iframe); });
 div.appendChild(iframe);
 document.body.appendChild(btn);
