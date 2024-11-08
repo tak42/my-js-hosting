@@ -1,8 +1,8 @@
 "use strict";
 var btnStyle = [
-    { property: 'width', value: '100px' },
-    { property: 'height', value: '50px' },
-    { property: 'backgroundColor', value: 'red' },
+    { property: 'width', value: '200px' },
+    { property: 'height', value: '200px' },
+    { property: 'backgroundColor', value: 'transparent' },
 ];
 var alertFunc = function () {
     alert('Hello World!!');
