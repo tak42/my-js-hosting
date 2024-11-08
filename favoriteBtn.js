@@ -1,15 +1,15 @@
 "use strict";
 var btnStyle = [
-    { property: 'width', value: '200px' },
-    { property: 'height', value: '200px' },
-    { property: 'backgroundColor', value: 'transparent' },
+    { property: 'width', value: '100px' },
+    { property: 'height', value: '50px' },
+    { property: 'color', value: 'red' },
 ];
 var alertFunc = function () {
     alert('Hello World!!');
 };
 var setStyle = function (htmlElm, styles) {
     styles.forEach(function (val) {
-        htmlElm.style.setProperty(val.property, val.value);
+        htmlElm.style.setProperty(String(val.property), val.value);
     });
 };
 var btn = document.createElement('button');
