@@ -15,13 +15,13 @@ var setStyle = function (htmlElm, styles) {
         htmlElm.style.setProperty(String(val.property), val.value);
     });
 };
-var setDisplayIframe = function (child) {
-    document.body.appendChild(child);
+var setDisplayIframe = function (iframe) {
+    document.body.appendChild(iframe);
 };
 var btn = document.createElement('button');
 var iframe = document.createElement('iframe');
 btn.innerText = 'iframe 表示';
-iframe.src = 'https://www.mouse-jp.co.jp/';
+iframe.src = 'https://localhost:3000/';
 setStyle(btn, btnStyle);
 setStyle(iframe, iframeStyle);
 btn.addEventListener('click', function () { return setDisplayIframe(iframe); });
