@@ -24,11 +24,11 @@ var setStyle = function (htmlElm, styles) {
 };
 var showIframe = function () {
     var container = document.getElementById(containerId);
-    if (!container)
+    if (!container || document.getElementById('iframeContainer'))
         return false;
     var iframe = document.createElement('iframe');
     btn.innerText = 'iframe 表示';
-    iframe.src = 'https://localhost:3000/';
+    iframe.src = 'http://localhost:3000/';
     iframe.sandbox.value = 'allow-scripts allow-same-origin';
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
