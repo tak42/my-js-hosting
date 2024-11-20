@@ -8,6 +8,8 @@ var btnStyle = [
     { property: 'left', value: '100px' },
 ];
 var containerStyle = [
+    { property: 'height', value: '800px' },
+    { property: 'width', value: '600px' },
     { property: 'position', value: 'absolute' },
     { property: 'top', value: '50%' },
     { property: 'left', value: '50%' },
