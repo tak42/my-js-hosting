@@ -1,4 +1,3 @@
-"use strict";
 var btnStyle = [
     { property: 'width', value: '100px' },
     { property: 'height', value: '50px' },
@@ -32,7 +31,7 @@ var showIframe = function () {
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
-exports.hideIframe = function () {
+export var hideIframe = function () {
     var container = document.getElementById(containerId);
     var iframe = document.querySelector('iframe');
     if (!container || !iframe)
