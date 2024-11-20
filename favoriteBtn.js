@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.hideIframe = void 0;
 var btnStyle = [
     { property: 'width', value: '100px' },
     { property: 'height', value: '50px' },
@@ -34,14 +32,13 @@ var showIframe = function () {
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
-var hideIframe = function () {
+exports.hideIframe = function () {
     var container = document.getElementById(containerId);
     var iframe = document.querySelector('iframe');
     if (!container || !iframe)
         return false;
     container.removeChild(iframe);
 };
-exports.hideIframe = hideIframe;
 var btn = document.createElement('button');
 var containerId = 'iframeContainer';
 var container = document.createElement('div');
