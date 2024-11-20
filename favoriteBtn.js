@@ -1,3 +1,4 @@
+"use strict";
 var btnStyle = [
     { property: 'width', value: '100px' },
     { property: 'height', value: '50px' },
@@ -28,15 +29,9 @@ var showIframe = function () {
     var iframe = document.createElement('iframe');
     btn.innerText = 'iframe 表示';
     iframe.src = 'https://localhost:3000/';
+    iframe.sandbox.value = 'allow-scripts allow-same-origin';
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
-};
-export var hideIframe = function () {
-    var container = document.getElementById(containerId);
-    var iframe = document.querySelector('iframe');
-    if (!container || !iframe)
-        return false;
-    container.removeChild(iframe);
 };
 var btn = document.createElement('button');
 var containerId = 'iframeContainer';
