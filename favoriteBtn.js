@@ -24,7 +24,7 @@ var setStyle = function (htmlElm, styles) {
 };
 var showIframe = function () {
     var container = document.getElementById(containerId);
-    if (!container || document.getElementById('iframeContainer'))
+    if (!container || container.querySelector('iframe'))
         return false;
     var iframe = document.createElement('iframe');
     btn.innerText = 'iframe 表示';
