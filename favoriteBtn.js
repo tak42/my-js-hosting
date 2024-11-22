@@ -29,7 +29,6 @@ var setStyle = function (htmlElm, styles) {
 var showIframe = function () {
     var container = document.getElementById(containerId);
     var iframe = document.createElement('iframe');
-    btn.innerText = 'iframe 表示';
     iframe.src = localhostUrl;
     iframe.sandbox.value = 'allow-scripts allow-same-origin';
     setStyle(iframe, iframeStyle);
@@ -47,6 +46,7 @@ window.addEventListener('message', function (event) {
 });
 var btn = document.createElement('button');
 var container = document.createElement('div');
+btn.innerText = 'iframe 表示';
 container.id = containerId;
 setStyle(btn, btnStyle);
 setStyle(container, containerStyle);
