@@ -42,6 +42,7 @@ var hideIframe = function () {
         container === null || container === void 0 ? void 0 : container.removeChild(iframe);
 };
 window.addEventListener('message', function (event) {
+    console.log("message:".concat(event));
     if (event.origin !== localhostUrl)
         return false;
     var eventSwitcObj = [
