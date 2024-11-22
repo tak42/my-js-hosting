@@ -46,6 +46,7 @@ var hideIframe = function () {
     container.removeChild(iframe);
 };
 window.addEventListener('message', function (event) {
+    console.log(event);
     if (event.origin !== 'http://localhost')
         return false;
     if (event.data === 'close')
