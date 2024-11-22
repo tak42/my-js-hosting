@@ -1,4 +1,6 @@
 "use strict";
+var localhostUrl = 'http://localhost:3000/';
+var containerId = 'iframeContainer';
 var btnStyle = [
     { property: 'width', value: '100px' },
     { property: 'height', value: '50px' },
@@ -24,40 +26,41 @@ var setStyle = function (htmlElm, styles) {
         htmlElm.style.setProperty(String(val.property), val.value);
     });
 };
-var showIframe = function () {
+var showIframe = function (url) {
     var container = document.getElementById(containerId);
-    if (!container || container.querySelector('iframe'))
-        return false;
     var iframe = document.createElement('iframe');
     btn.innerText = 'iframe 表示';
-    iframe.src = 'http://localhost:3000/';
+    iframe.src = url;
     iframe.sandbox.value = 'allow-scripts allow-same-origin';
     setStyle(iframe, iframeStyle);
-    container.appendChild(iframe);
+    container === null || container === void 0 ? void 0 : container.appendChild(iframe);
 };
 var hideIframe = function () {
-    var container = document.getElementById('iframeContainer');
-    if (!container)
-        return console.log('container not exist');
-    console.log('container exist');
-    var iframe = container.querySelector('iframe');
-    if (!iframe)
-        return false;
-    container.removeChild(iframe);
+    var container = document.getElementById(containerId);
+    var iframe = container === null || container === void 0 ? void 0 : container.querySelector('iframe');
+    if (iframe)
+        container === null || container === void 0 ? void 0 : container.removeChild(iframe);
 };
 window.addEventListener('message', function (event) {
-    console.log(event);
-    if (event.origin !== 'http://localhost')
+    if (event.origin !== localhostUrl)
         return false;
-    if (event.data === 'close')
-        hideIframe();
+    var eventSwitcObj = [
+        {
+            data: 'getOrigin',
+            procFunc: function () {
+                var _a;
+                (_a = event.source) === null || _a === void 0 ? void 0 : _a.postMessage(window.location.origin, { targetOrigin: event.origin });
+            },
+        },
+        { data: 'close', procFunc: hideIframe },
+    ];
+    eventSwitcObj[event.data].procFunc();
 });
 var btn = document.createElement('button');
-var containerId = 'iframeContainer';
 var container = document.createElement('div');
 container.id = containerId;
 setStyle(btn, btnStyle);
 setStyle(container, containerStyle);
-btn.addEventListener('click', showIframe);
+btn.addEventListener('click', function () { return showIframe(localhostUrl); });
 document.body.appendChild(btn);
 document.body.appendChild(container);
