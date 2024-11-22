@@ -35,6 +35,22 @@ var showIframe = function () {
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
+var hideIframe = function () {
+    var container = document.getElementById('iframeContainer');
+    if (!container)
+        return console.log('container not exist');
+    console.log('container exist');
+    var iframe = container.querySelector('iframe');
+    if (!iframe)
+        return false;
+    container.removeChild(iframe);
+};
+window.addEventListener('message', function (event) {
+    if (event.origin !== 'http://localhost')
+        return false;
+    if (event.data === 'close')
+        hideIframe();
+});
 var btn = document.createElement('button');
 var containerId = 'iframeContainer';
 var container = document.createElement('div');
