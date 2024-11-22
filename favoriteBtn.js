@@ -50,6 +50,7 @@ window.addEventListener('message', function (event) {
             data: 'getOrigin',
             procFunc: function () {
                 var _a;
+                console.log('postMsg');
                 (_a = event.source) === null || _a === void 0 ? void 0 : _a.postMessage(window.location.origin, { targetOrigin: event.origin });
             },
         },
