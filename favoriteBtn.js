@@ -1,6 +1,7 @@
 "use strict";
 var localhostUrl = 'http://localhost:3000';
-var containerId = 'iframeContainer';
+var uuid = crypto.randomUUID();
+var containerId = "feasy_iframeContainer_".concat(uuid);
 var btnStyle = [
     { property: 'width', value: '100px' },
     { property: 'height', value: '50px' },
