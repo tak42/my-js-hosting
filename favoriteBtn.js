@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '150px' },
@@ -38,24 +39,55 @@ var hideIframe = function () {
     if (iframe)
         container.removeChild(iframe);
 };
-var shareForm = function (data) {
-    var inputElms = document.getElementsByTagName('input');
+var targetInputs = [
+    {
+        name: 'q1',
+        kind: 'name',
+    },
+    {
+        name: 'q2',
+        kind: 'email',
+    },
+    {
+        name: 'q5',
+        kind: 'old',
+    },
+];
+var searchTargetInputs = function () {
+    var arrayInputElms = Array.from(document.getElementsByTagName('input'));
+    return arrayInputElms.filter(function (elm) {
+        targetInputs.some(function (val) { return val.name === elm.name; });
+    });
+};
+var shareForm = function (contents) {
+    var inputElms = searchTargetInputs();
     if (!inputElms.length)
-        return console.log("don't get q1");
-    var inputArray = Array.from(inputElms);
-    var targetInput = inputArray.filter(function (elm) { return elm.id === 'q1'; });
-    targetInput[0].value = data;
-    console.log(data);
+        return console.log("don't get name q");
+    console.log(inputElms);
+    var convertContents = targetInputs.map(function (input) {
+        var content = contents.find(function (_a) {
+            var kind = _a.kind;
+            return kind === input.kind;
+        });
+        return { name: input.name, kind: input.kind, value: content ? content.value : '' };
+    });
+    convertContents.forEach(function (content) {
+        inputElms.filter(function (_a) {
+            var name = _a.name;
+            return name === content.name;
+        })[0].value = content.value;
+    });
 };
 var iframePostActions = [
     { action: 'hide', func: hideIframe },
     { action: 'share', func: shareForm },
 ];
 window.addEventListener('message', function (event) {
-    var actionFunc = iframePostActions.filter(function (val) { return val.action === event.data.action; });
     if (event.origin !== LOCALHOST_URL)
-        return console.log('not localhost');
-    actionFunc[0].func(event.data.content);
+        return false;
+    var postData = event.data;
+    var actionFunc = iframePostActions.filter(function (val) { return val.action === postData.action; });
+    actionFunc[0].func(postData.contents);
 });
 var btn = document.createElement('button');
 var container = document.createElement('div');
