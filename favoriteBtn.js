@@ -39,9 +39,12 @@ var hideIframe = function () {
         container.removeChild(iframe);
 };
 var shareForm = function (data) {
-    var nameInput = document.getElementById('q1');
-    if (!nameInput)
-        console.log("don't get q1");
+    var inputElms = document.getElementsByTagName('input');
+    if (!inputElms.length)
+        return console.log("don't get q1");
+    var inputArray = Array.from(inputElms);
+    var targetInput = inputArray.filter(function (elm) { return elm.id === 'q1'; });
+    targetInput[0].value = data;
     console.log(data);
 };
 var iframePostActions = [
