@@ -53,29 +53,25 @@ var targetInputs = [
     },
 ];
 var searchTargetInputs = function () {
-    var arrayInputElms = Array.from(document.getElementsByTagName('input'));
-    return arrayInputElms.filter(function (elm) {
-        targetInputs.some(function (val) { return val.name === elm.name; });
+    return Array.from(document.getElementsByTagName('input')).filter(function (elm) {
+        return targetInputs.some(function (val) { return val.name === elm.name; });
     });
 };
 var shareForm = function (contents) {
     var inputElms = searchTargetInputs();
     if (!inputElms.length)
-        return console.log("don't get name q");
-    console.log(inputElms);
-    var convertContents = targetInputs.map(function (input) {
+        return false;
+    targetInputs.forEach(function (input) {
         var content = contents.find(function (_a) {
             var kind = _a.kind;
             return kind === input.kind;
         });
-        return { name: input.name, kind: input.kind, value: content ? content.value : '' };
-    });
-    convertContents.forEach(function (content) {
         inputElms.filter(function (_a) {
             var name = _a.name;
-            return name === content.name;
-        })[0].value = content.value;
+            return name === input.name;
+        })[0].value = content ? content.value : '';
     });
+    hideIframe();
 };
 var iframePostActions = [
     { action: 'hide', func: hideIframe },
