@@ -87,6 +87,11 @@ window.addEventListener('message', function (event) {
     var actionFunc = iframePostActions.filter(function (val) { return val.action === postData.action; });
     actionFunc[0].func(postData.contents);
 });
+// スクリプトを生成
+var script = document.createElement('script');
+script.type = 'module'; // モジュールとして指定
+// ドキュメントに追加して実行
+document.body.appendChild(script);
 var btn = document.createElement('button');
 var container = document.createElement('div');
 btn.innerText = 'iframe 表示';
