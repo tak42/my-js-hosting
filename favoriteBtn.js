@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '150px' },
@@ -97,3 +95,4 @@ setStyle(container, containerStyle);
 btn.addEventListener('click', showIframe);
 document.body.appendChild(btn);
 document.body.appendChild(container);
+export {};
