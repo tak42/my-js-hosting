@@ -38,37 +38,37 @@ var hideIframe = function () {
     if (iframe)
         container.removeChild(iframe);
 };
-var targetInputs = [
+var combineIdentifiers = [
     {
-        name: 'q1',
+        id: 'q1',
         kind: 'name',
     },
     {
-        name: 'q2',
+        id: 'q2',
         kind: 'email',
     },
     {
-        name: 'q5',
+        id: 'q5',
         kind: 'old',
     },
 ];
 var searchTargetInputs = function () {
     return Array.from(document.getElementsByTagName('input')).filter(function (elm) {
-        return targetInputs.some(function (val) { return val.name === elm.name; });
+        return combineIdentifiers.some(function (val) { return val.id === elm.id; });
     });
 };
 var shareForm = function (contents) {
     var inputElms = searchTargetInputs();
     if (!inputElms.length)
         return false;
-    targetInputs.forEach(function (input) {
+    combineIdentifiers.forEach(function (val) {
         var content = contents.find(function (_a) {
             var kind = _a.kind;
-            return kind === input.kind;
+            return kind === val.kind;
         });
         inputElms.filter(function (_a) {
-            var name = _a.name;
-            return name === input.name;
+            var id = _a.id;
+            return id === val.id;
         })[0].value = content ? content.value : '';
     });
     hideIframe();
