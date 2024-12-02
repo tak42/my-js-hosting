@@ -9,16 +9,17 @@ var btnStyle = [
     { property: 'left', value: '100px' },
 ];
 var containerStyle = [
+    { property: 'height', value: '50%' },
     { property: 'width', value: '50%' },
     { property: 'position', value: 'absolute' },
     { property: 'top', value: '50%' },
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
-    { property: 'background', value: 'white' },
 ];
 var iframeStyle = [
     { property: 'height', value: '100%' },
     { property: 'width', value: '100%' },
+    { property: 'background', value: 'white' },
 ];
 var setStyle = function (htmlElm, styles) {
     styles.forEach(function (val) {
@@ -33,9 +34,7 @@ var showIframe = function () {
     container.appendChild(iframe);
 };
 var hideIframe = function () {
-    var iframe = container.querySelector('iframe');
-    if (iframe)
-        container.removeChild(iframe);
+    document.body.removeChild(container);
 };
 var combineIdentifiers = [
     {
