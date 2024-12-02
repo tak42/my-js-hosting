@@ -9,13 +9,12 @@ var btnStyle = [
     { property: 'left', value: '100px' },
 ];
 var containerStyle = [
-    { property: 'height', value: '800px' },
-    { property: 'width', value: '600px' },
+    { property: 'width', value: '50%' },
     { property: 'position', value: 'absolute' },
     { property: 'top', value: '50%' },
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
-    { property: 'backgroundColor', value: 'white' },
+    { property: 'background', value: 'white' },
 ];
 var iframeStyle = [
     { property: 'height', value: '100%' },
