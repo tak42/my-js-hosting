@@ -16,6 +16,10 @@ var containerStyle = [
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
 ];
+var containerHideStyle = [
+    { property: 'height', value: '0' },
+    { property: 'width', value: '0' },
+];
 var iframeStyle = [
     { property: 'height', value: '100%' },
     { property: 'width', value: '100%' },
@@ -34,7 +38,7 @@ var showIframe = function () {
     container.appendChild(iframe);
 };
 var hideIframe = function () {
-    document.body.removeChild(container);
+    setStyle(container, containerHideStyle);
 };
 var combineIdentifiers = [
     {
@@ -86,7 +90,3 @@ var btn = document.createElement('button');
 var container = document.createElement('div');
 btn.innerText = 'iframe 表示';
 setStyle(btn, btnStyle);
-setStyle(container, containerStyle);
-btn.addEventListener('click', showIframe);
-document.body.appendChild(btn);
-document.body.appendChild(container);
