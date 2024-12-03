@@ -90,3 +90,7 @@ var btn = document.createElement('button');
 var container = document.createElement('div');
 btn.innerText = 'iframe 表示';
 setStyle(btn, btnStyle);
+setStyle(container, containerStyle);
+btn.addEventListener('click', showIframe);
+document.body.appendChild(btn);
+document.body.appendChild(container);
