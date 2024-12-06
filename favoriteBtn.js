@@ -5,7 +5,7 @@ var btnStyle = [
     { property: 'height', value: '56px' },
     { property: 'color', value: 'red' },
     { property: 'position', value: 'absolute' },
-    { property: 'top', value: '16%' },
+    { property: 'top', value: '160px' },
     { property: 'left', value: '80px' },
 ];
 var containerStyle = [
@@ -31,10 +31,12 @@ var setStyle = function (htmlElm, styles) {
     });
 };
 var showIframe = function () {
+    setStyle(container, containerStyle);
+    if (container.querySelector('iframe'))
+        return;
     var iframe = document.createElement('iframe');
     iframe.src = LOCALHOST_URL;
     iframe.sandbox.value = 'allow-scripts allow-same-origin';
-    setStyle(container, containerStyle);
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
