@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '160px' },
