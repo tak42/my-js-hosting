@@ -56,7 +56,7 @@ var combineIdentifiers = [
         kind: 'old',
     },
 ];
-export var shareForm = function (content) {
+var shareForm = function (content) {
     var inputElms = Array.from(document.getElementsByTagName('input'));
     combineIdentifiers.forEach(function (val) {
         var elm = inputElms.find(function (_a) {
@@ -86,3 +86,4 @@ setStyle(btn, btnStyle);
 btn.addEventListener('click', showIframe);
 document.body.appendChild(btn);
 document.body.appendChild(container);
+export {};
