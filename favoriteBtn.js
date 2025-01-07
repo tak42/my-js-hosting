@@ -56,6 +56,7 @@ var hideForm = function () {
     hideIframe(container);
 };
 var originCheck = function (event) {
+    console.log(event);
     if (event.source === null)
         return;
     event.source.postMessage(window.location.origin, event.origin);
