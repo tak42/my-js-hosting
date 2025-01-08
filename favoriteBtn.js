@@ -55,20 +55,20 @@ var shareForm = function (content) {
 var hideForm = function () {
     hideIframe(container);
 };
-var originCheck = function (event) {
+var originCheck = function (content, event) {
+    console.log(content);
     console.log(event);
-    if (event.source === null)
-        return;
-    event.source.postMessage(window.location.origin, event.origin);
+    // if (event.source === null) return;
+    // event.source.postMessage(window.location.origin, event.origin as WindowPostMessageOptions);
 };
 var iframePostActions = {
     hide: hideForm,
-    share: function () { return shareForm; },
-    getOrigin: function () { return originCheck; },
+    share: shareForm,
+    check: originCheck,
 };
 window.addEventListener('message', function (event) {
     var postData = event.data;
-    iframePostActions[postData.action](postData.content);
+    iframePostActions[postData.action](postData.content, event);
 });
 var btn = document.createElement('button');
 var container = document.createElement('div');
