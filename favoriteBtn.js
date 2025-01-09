@@ -42,7 +42,7 @@ var showIframe = function (container) {
 var hideIframe = function (container) {
     setStyle(container, containerHideStyle);
 };
-var shareForm = function (content) {
+var shareForm = function (event, content) {
     console.log(content);
     // const inputElms = Array.from(document.getElementsByTagName('input'));
     // combineIdentifiers.forEach((val) => {
@@ -55,11 +55,10 @@ var shareForm = function (content) {
 var hideForm = function () {
     hideIframe(container);
 };
-var originCheck = function (content, event) {
-    console.log(content);
-    console.log(event);
-    // if (event.source === null) return;
-    // event.source.postMessage(window.location.origin, event.origin as WindowPostMessageOptions);
+var originCheck = function (event) {
+    if (!event.source)
+        return;
+    event.source.postMessage(window.location.origin, event.origin);
 };
 var iframePostActions = {
     hide: hideForm,
@@ -68,7 +67,7 @@ var iframePostActions = {
 };
 window.addEventListener('message', function (event) {
     var postData = event.data;
-    iframePostActions[postData.action](postData.content, event);
+    iframePostActions[postData.action](event, postData.content);
 });
 var btn = document.createElement('button');
 var container = document.createElement('div');
