@@ -35,15 +35,17 @@ var showIframe = function (container) {
         return;
     var iframe = document.createElement('iframe');
     iframe.src = LOCALHOST_URL;
-    iframe.sandbox.value = 'allow-scripts allow-same-origin';
+    iframe.sandbox.value = 'allow-scripts allow-same-origin allow-modals';
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
 var hideIframe = function (container) {
     setStyle(container, containerHideStyle);
 };
-var shareForm = function (event, content) {
-    console.log(content);
+var shareForm = function (event) {
+    console.log(event);
+    // 組み合わせはIframe側から送ってもらう
+    // 組み合わせに関する型定義を共有
     // const inputElms = Array.from(document.getElementsByTagName('input'));
     // combineIdentifiers.forEach((val) => {
     //   const elm = inputElms.find(({ id }) => id === val.id);
@@ -67,7 +69,7 @@ var iframePostActions = {
 };
 window.addEventListener('message', function (event) {
     var postData = event.data;
-    iframePostActions[postData.action](event, postData.content);
+    iframePostActions[postData.action](event);
 });
 var btn = document.createElement('button');
 var container = document.createElement('div');
