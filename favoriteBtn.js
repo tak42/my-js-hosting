@@ -29,7 +29,7 @@ var setStyle = function (htmlElm, styles) {
         htmlElm.style.setProperty(String(val.property), val.value);
     });
 };
-var showIframe = function (container) {
+var showIframe = function () {
     setStyle(container, containerStyle);
     if (container.querySelector('iframe'))
         return;
@@ -39,23 +39,23 @@ var showIframe = function (container) {
     setStyle(iframe, iframeStyle);
     container.appendChild(iframe);
 };
-var hideIframe = function (container) {
+var hideIframe = function () {
     setStyle(container, containerHideStyle);
 };
 var shareForm = function (event) {
     console.log(event);
-    // 組み合わせはIframe側から送ってもらう
-    // 組み合わせに関する型定義を共有
-    // const inputElms = Array.from(document.getElementsByTagName('input'));
-    // combineIdentifiers.forEach((val) => {
-    //   const elm = inputElms.find(({ id }) => id === val.id);
-    //   if (!elm) return;
-    //   elm.value = content[val.kind];
-    // });
-    hideIframe(container);
-};
-var hideForm = function () {
-    hideIframe(container);
+    var postData = event.data;
+    var inputElms = Array.from(document.getElementsByTagName('input'));
+    postData.content.forEach(function (val) {
+        var elm = inputElms.find(function (_a) {
+            var id = _a.id;
+            return id === val.id;
+        });
+        if (!elm)
+            return;
+        elm.value = val.value;
+    });
+    hideIframe();
 };
 var originCheck = function (event) {
     if (!event.source)
@@ -63,7 +63,7 @@ var originCheck = function (event) {
     event.source.postMessage(window.location.origin, event.origin);
 };
 var iframePostActions = {
-    hide: hideForm,
+    hide: hideIframe,
     share: shareForm,
     check: originCheck,
 };
@@ -75,7 +75,7 @@ var btn = document.createElement('button');
 var container = document.createElement('div');
 btn.innerText = 'iframe 表示';
 setStyle(btn, btnStyle);
-btn.addEventListener('click', function () { return showIframe(container); });
+btn.addEventListener('click', showIframe);
 document.body.appendChild(btn);
 document.body.appendChild(container);
 export {};
