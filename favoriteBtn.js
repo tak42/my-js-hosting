@@ -43,7 +43,6 @@ var hideIframe = function () {
     setStyle(container, containerHideStyle);
 };
 var shareForm = function (event) {
-    console.log(event);
     var postData = event.data;
     var inputElms = Array.from(document.getElementsByTagName('input'));
     postData.content.forEach(function (val) {
