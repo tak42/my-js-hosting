@@ -59,7 +59,7 @@ var shareForm = function (event) {
 var originCheck = function (event) {
     if (!event.source)
         return;
-    event.source.postMessage(window.location.origin);
+    event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
 };
 var iframePostActions = {
     hide: hideIframe,
