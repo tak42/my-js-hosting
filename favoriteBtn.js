@@ -15,10 +15,10 @@ var containerStyle = [
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
 ];
-// const containerHideStyle: Styles = [
-//   { property: 'height', value: '0' },
-//   { property: 'width', value: '0' },
-// ];
+var containerHideStyle = [
+    { property: 'height', value: '0' },
+    { property: 'width', value: '0' },
+];
 var iframeStyle = [
     { property: 'height', value: '100%' },
     { property: 'width', value: '100%' },
@@ -40,11 +40,11 @@ var showIframe = function () {
     container.appendChild(iframe);
 };
 var hideIframe = function () {
-    // setStyle(container, containerHideStyle);
     var iframe = container.querySelector('iframe');
     if (!iframe)
         return;
     container.removeChild(iframe);
+    setStyle(container, containerHideStyle);
 };
 var shareForm = function (event) {
     var postData = event.data;
