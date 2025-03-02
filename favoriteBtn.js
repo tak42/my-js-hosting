@@ -1,3 +1,4 @@
+"use strict";
 var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '160px' },
@@ -15,10 +16,10 @@ var containerStyle = [
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
 ];
-var containerHideStyle = [
-    { property: 'height', value: '0' },
-    { property: 'width', value: '0' },
-];
+// const containerHideStyle: Style[] = [
+//   { property: 'height', value: '0' },
+//   { property: 'width', value: '0' },
+// ];
 var iframeStyle = [
     { property: 'height', value: '100%' },
     { property: 'width', value: '100%' },
@@ -29,56 +30,61 @@ var setStyle = function (htmlElm, styles) {
         htmlElm.style.setProperty(String(val.property), val.value);
     });
 };
-var showIframe = function () {
-    setStyle(container, containerStyle);
-    if (container.querySelector('iframe'))
-        return;
-    var iframe = document.createElement('iframe');
-    iframe.src = LOCALHOST_URL;
-    iframe.sandbox.value = 'allow-scripts allow-same-origin allow-modals';
-    setStyle(iframe, iframeStyle);
-    container.appendChild(iframe);
-};
-var hideIframe = function () {
-    var iframe = container.querySelector('iframe');
-    if (!iframe)
-        return;
-    container.removeChild(iframe);
-    setStyle(container, containerHideStyle);
-};
-var shareForm = function (event) {
-    var postData = event.data;
-    var inputElms = Array.from(document.getElementsByTagName('input'));
-    postData.content.forEach(function (val) {
-        var elm = inputElms.find(function (_a) {
-            var id = _a.id;
-            return id === val.id;
-        });
-        if (!elm)
-            return;
-        elm.value = val.value;
+var setAttribute = function (htmlElm, attributes) {
+    attributes.forEach(function (obj) {
+        htmlElm.setAttribute(obj.quorifiedName, obj.value);
     });
-    hideIframe();
 };
-var originCheck = function (event) {
-    if (!event.source)
+var showIframeBtnData = {
+    tag: 'button',
+    attr: [{ quorifiedName: 'innerText', value: 'iframe 表示' }],
+    init: function (btn) {
+        setStyle(btn, btnStyle);
+        setAttribute(btn, showIframeBtnData.attr);
+        btn.addEventListener('click', function () { return renderHtml(containerData.tag, containerData.init); });
+        btn.addEventListener('click', function () {
+            return renderChildHtml(iframeData.tag, iframeData.init, containerData.attr[0].value);
+        });
+    },
+};
+var iframeData = {
+    tag: 'iframe',
+    attr: [
+        { quorifiedName: 'src', value: LOCALHOST_URL },
+        { quorifiedName: 'sandbox', value: 'allow-scripts allow-same-origin allow-modals' },
+    ],
+    init: function (iframe) {
+        setAttribute(iframe, iframeData.attr);
+        setStyle(iframe, iframeStyle);
+    },
+};
+var containerData = {
+    tag: 'div',
+    attr: [
+        {
+            quorifiedName: 'id',
+            value: 'abc12345',
+        },
+    ],
+    init: function (container) {
+        setStyle(container, containerStyle);
+    },
+};
+var renderHtml = function (tag, initFunc) {
+    var elm = document.createElement(tag);
+    initFunc(elm);
+    document.body.appendChild(elm);
+};
+var renderChildHtml = function (tag, initFunc, parentId) {
+    var elm = document.createElement(tag);
+    var parentElm = document.getElementById(parentId);
+    if (!parentElm)
         return;
-    event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
+    initFunc(elm);
+    if (!parentElm.querySelector(tag))
+        parentElm.appendChild(elm);
 };
-var iframePostActions = {
-    hide: hideIframe,
-    share: shareForm,
-    check: originCheck,
+var init = function () {
+    renderHtml(showIframeBtnData.tag, showIframeBtnData.init);
 };
-window.addEventListener('message', function (event) {
-    var postData = event.data;
-    iframePostActions[postData.action](event);
-});
-var btn = document.createElement('button');
-var container = document.createElement('div');
-btn.innerText = 'iframe 表示';
-setStyle(btn, btnStyle);
-btn.addEventListener('click', showIframe);
-document.body.appendChild(btn);
-document.body.appendChild(container);
-export {};
+init();
