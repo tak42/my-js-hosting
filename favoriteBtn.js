@@ -35,12 +35,33 @@ var setAttribute = function (htmlElm, attributes) {
         htmlElm.setAttribute(obj.quorifiedName, obj.value);
     });
 };
+// const shareForm = (event: MessageEvent) => {
+//   console.log(event);
+//   const postData: PostData = event.data;
+//   const inputElms = Array.from(document.getElementsByTagName('input'));
+//   // データ駆動設計でやるべき
+//   inputElms.forEach((elm) => {
+//     const formId: CombinedFormIds = elm.id;
+//     elm.value = postData.content[formId];
+//   });
+//   removeHtml(containerData.attr[0].value);
+// };
+window.addEventListener('message', function (event) {
+    // ここでPostDataを受け取れることが確定しているのがナンセンスな気がする
+    // const postData: PostData = event.data;
+    if ('action' in event.data === false)
+        return;
+    if (event.data['action'] === 'hide')
+        removeHtml(containerData.attr[0].value);
+    if (event.data['action'] === 'check' && event.source)
+        event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
+});
 var showIframeBtnData = {
     tag: 'button',
-    attr: [{ quorifiedName: 'innerText', value: 'iframe 表示' }],
+    attr: [],
     init: function (btn) {
         setStyle(btn, btnStyle);
-        setAttribute(btn, showIframeBtnData.attr);
+        btn.innerText = 'フォーム表示';
         btn.addEventListener('click', function () { return renderHtml(containerData.tag, containerData.init); });
         btn.addEventListener('click', function () {
             return renderChildHtml(iframeData.tag, iframeData.init, containerData.attr[0].value);
@@ -63,7 +84,7 @@ var containerData = {
     attr: [
         {
             quorifiedName: 'id',
-            value: 'abc12345',
+            value: crypto.randomUUID(),
         },
     ],
     init: function (container) {
@@ -84,6 +105,11 @@ var renderChildHtml = function (tag, initFunc, parentId) {
     initFunc(elm);
     if (!parentElm.querySelector(tag))
         parentElm.appendChild(elm);
+};
+var removeHtml = function (id) {
+    var elm = document.getElementById(id);
+    if (elm)
+        document.body.removeChild(elm);
 };
 var init = function () {
     renderHtml(showIframeBtnData.tag, showIframeBtnData.init);
