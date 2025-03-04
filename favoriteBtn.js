@@ -67,6 +67,7 @@ var containerData = {
         },
     ],
     init: function (container) {
+        setAttribute(container, containerData.attr);
         setStyle(container, containerStyle);
     },
 };
