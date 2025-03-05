@@ -16,10 +16,6 @@ var containerStyle = [
     { property: 'left', value: '50%' },
     { property: 'transform', value: 'translate(-50%, -50%)' },
 ];
-// const containerHideStyle: Style[] = [
-//   { property: 'height', value: '0' },
-//   { property: 'width', value: '0' },
-// ];
 var iframeStyle = [
     { property: 'height', value: '100%' },
     { property: 'width', value: '100%' },
@@ -35,26 +31,25 @@ var setAttribute = function (htmlElm, attributes) {
         htmlElm.setAttribute(obj.quorifiedName, obj.value);
     });
 };
-// const shareForm = (event: MessageEvent) => {
-//   console.log(event);
-//   const postData: PostData = event.data;
-//   const inputElms = Array.from(document.getElementsByTagName('input'));
-//   // データ駆動設計でやるべき
-//   inputElms.forEach((elm) => {
-//     const formId: CombinedFormIds = elm.id;
-//     elm.value = postData.content[formId];
-//   });
-//   removeHtml(containerData.attr[0].value);
-// };
 window.addEventListener('message', function (event) {
-    // ここでPostDataを受け取れることが確定しているのがナンセンスな気がする
-    // const postData: PostData = event.data;
     if ('action' in event.data === false)
         return;
+    // 以下でif使わずにactionの判定で分岐するには?型定義?
     if (event.data['action'] === 'hide')
         removeHtml(containerData.attr[0].value);
     if (event.data['action'] === 'check' && event.source)
         event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
+    if (event.data['action'] === 'share') {
+        // const postData: PostData = event.data;
+        var inputElms = Array.from(document.getElementsByTagName('input'));
+        // データ駆動設計でやるべき
+        inputElms.forEach(function (elm) {
+            // const formId: CombinedFormIds = elm.id;
+            console.log(elm);
+            // elm.value = postData.content[formId];
+        });
+        removeHtml(containerData.attr[0].value);
+    }
 });
 var showIframeBtnData = {
     tag: 'button',
