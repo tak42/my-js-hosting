@@ -1,4 +1,3 @@
-"use strict";
 var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '160px' },
@@ -34,19 +33,16 @@ var setAttribute = function (htmlElm, attributes) {
 window.addEventListener('message', function (event) {
     if ('action' in event.data === false)
         return;
+    var postData = event.data;
     // 以下でif使わずにactionの判定で分岐するには?型定義?
     if (event.data['action'] === 'hide')
         removeHtml(containerData.attr[0].value);
     if (event.data['action'] === 'check' && event.source)
         event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
     if (event.data['action'] === 'share') {
-        // const postData: PostData = event.data;
-        var inputElms = Array.from(document.getElementsByTagName('input'));
-        // データ駆動設計でやるべき
-        inputElms.forEach(function (elm) {
-            // const formId: CombinedFormIds = elm.id;
-            console.log(elm);
-            // elm.value = postData.content[formId];
+        console.log(postData.content);
+        postData.content.forEach(function (dataSet) {
+            updateInputValue(dataSet.id, dataSet.val);
         });
         removeHtml(containerData.attr[0].value);
     }
@@ -87,6 +83,20 @@ var containerData = {
         setStyle(container, containerStyle);
     },
 };
+var getElementById = function (id) {
+    return document.getElementById(id);
+};
+var updateInputValue = function (elementId, newValue) {
+    var _a;
+    var input = getElementById(elementId);
+    if (!input)
+        return console.error("id:".concat(elementId, " Input element not found"));
+    var nativeInputValueSetter = (_a = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')) === null || _a === void 0 ? void 0 : _a.set;
+    if (!nativeInputValueSetter)
+        return console.error("id:".concat(elementId, " Failed to get value setter"));
+    nativeInputValueSetter.call(input, newValue);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+};
 var renderHtml = function (tag, initFunc) {
     var elm = document.createElement(tag);
     initFunc(elm);
@@ -110,3 +120,4 @@ var init = function () {
     renderHtml(showIframeBtnData.tag, showIframeBtnData.init);
 };
 init();
+export {};
