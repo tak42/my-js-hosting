@@ -1,4 +1,3 @@
-var LOCALHOST_URL = 'http://localhost:3000';
 var btnStyle = [
     { property: 'width', value: '160px' },
     { property: 'height', value: '56px' },
@@ -34,13 +33,11 @@ window.addEventListener('message', function (event) {
     if ('action' in event.data === false)
         return;
     var postData = event.data;
-    // 以下でif使わずにactionの判定で分岐するには?型定義?
     if (event.data['action'] === 'hide')
         removeHtml(containerData.attr[0].value);
     if (event.data['action'] === 'check' && event.source)
         event.source.postMessage(window.location.origin, { targetOrigin: event.origin });
     if (event.data['action'] === 'share') {
-        console.log(postData.content);
         postData.content.forEach(function (dataSet) {
             updateInputValue(dataSet.id, dataSet.val);
         });
@@ -62,7 +59,7 @@ var showIframeBtnData = {
 var iframeData = {
     tag: 'iframe',
     attr: [
-        { quorifiedName: 'src', value: LOCALHOST_URL },
+        { quorifiedName: 'src', value: 'http://localhost:3000' },
         { quorifiedName: 'sandbox', value: 'allow-scripts allow-same-origin allow-modals' },
     ],
     init: function (iframe) {
@@ -83,9 +80,6 @@ var containerData = {
         setStyle(container, containerStyle);
     },
 };
-var getElementById = function (id) {
-    return document.getElementById(id);
-};
 var updateInputValue = function (elementId, newValue) {
     var _a;
     var input = getElementById(elementId);
@@ -104,7 +98,7 @@ var renderHtml = function (tag, initFunc) {
 };
 var renderChildHtml = function (tag, initFunc, parentId) {
     var elm = document.createElement(tag);
-    var parentElm = document.getElementById(parentId);
+    var parentElm = getElementById(parentId);
     if (!parentElm)
         return;
     initFunc(elm);
@@ -112,12 +106,12 @@ var renderChildHtml = function (tag, initFunc, parentId) {
         parentElm.appendChild(elm);
 };
 var removeHtml = function (id) {
-    var elm = document.getElementById(id);
+    var elm = getElementById(id);
     if (elm)
         document.body.removeChild(elm);
 };
-var init = function () {
-    renderHtml(showIframeBtnData.tag, showIframeBtnData.init);
+var getElementById = function (id) {
+    return document.getElementById(id);
 };
-init();
+renderHtml(showIframeBtnData.tag, showIframeBtnData.init);
 export {};
